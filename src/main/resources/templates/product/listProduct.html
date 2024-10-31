@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h1>LIST PRODUCTS!</h1>
+        <div>
+            <form th:action="@{/products/list_product}">
+                <b>Product name: </b>
+                <input type="text" name="proName" th:value="${proName}">
+                <input type="submit" value="search"/>
+            </form>
+
+            <form th:action="@{/products/list_product}">
+                <b>Sort by: </b>
+                <input type="hidden" name="proName" th:value="${proName}"/>
+                <select th:name="sortBy" th:value="${sortBy}">
+                    <option value="proName" th:selected="${sortBy.equals('proName')}">Product name</option>
+                    <option value="producer" th:selected="${sortBy.equals('producer')}">Producer</option>
+                    <option value="yearMaking" th:selected="${sortBy.equals('yearMaking')}">Year making</option>
+                    <option value="price" th:selected="${sortBy.equals('price')}">Price</option>
+                </select>
+                <input type="radio" th:name="orderBy" value="asc" th:checked="${orderBy.equals('asc')}"/>asc
+                <input type="radio" th:name="orderBy" value="desc" th:checked="${orderBy.equals('desc')}"/>desc
+                <input type="submit" value="sort"/>
+            </form>
+
+        </div>
+        <hr/>
+        <table class="table table-bordered">
+            <tr>
+                <th>Product Id</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Producer</th>
+                <th>Year Making</th>
+                <th>Price</th>
+            </tr>
+            <tr th:each="p:${list}">
+                <td th:text="${p.proId}"></td>
+                <td th:text="${p.proName}"></td>
+                <td th:text="${p.cate.cateName}"></td>
+                <td th:text="${p.producer}"></td>
+                <td th:text="${p.yearMaking}"></td>
+                <td th:text="${p.price}"></td>
+            </tr>
+        </table>
+        <span th:each="pp:${listPage}">
+            <a th:href="@{/products/list_product(proName=${proName},page=${pp},pageSize=${pageSize},sortBy=${sortBy},orderBy=${orderBy})}" th:text="${pp}"></a>&nbsp;&nbsp;|&nbsp;&nbsp;
+        </span>
+    </div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
